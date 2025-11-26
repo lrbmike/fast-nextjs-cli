@@ -1,0 +1,35 @@
+{
+  "Index": {
+    "title": "欢迎使用 Fast Next.js CLI",
+    "description": "通过编辑 src/app/[locale]/page.tsx 开始",
+    "button": "点击我",
+    "secondary": "次要按钮",
+    "signIn": "登录",
+    "signUp": "注册"
+  },
+  "NotFoundPage": {
+    "title": "页面未找到",
+    "description": "抱歉，我们无法找到您正在寻找的页面。",
+    "backToHome": "返回首页"
+  },
+  "Auth": {
+    "loginTitle": "登录",
+    "loginDesc": "输入您的邮箱以登录您的账户。",
+    "registerTitle": "注册",
+    "registerDesc": "创建一个新账户以开始使用。",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "signIn": "登录",
+    "signUp": "注册",
+    "alreadyHaveAccount": "已有账户？",
+    "dontHaveAccount": "还没有账户？",
+    "demoCredentials": "演示凭据：admin@example.com / password"
+  },
+  "Dashboard": {
+    "title": "仪表盘",
+    "description": "这是一个受保护的页面。只有登录后才能看到。",
+    "welcome": "欢迎回来！",
+    "logout": "退出登录"
+  }
+}
