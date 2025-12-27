@@ -31,7 +31,7 @@ program
     }
 
     if (!targetDir) {
-      console.log(pc.red('❌ Project name is required'));
+      console.log(pc.red('[ERROR] Project name is required'));
       process.exit(1);
     }
 
@@ -51,7 +51,7 @@ program
         });
         // Check if features.value exists (user might cancel)
         if (!features.value) {
-            console.log(pc.red('❌ Operation cancelled'));
+            console.log(pc.red('[ERROR] Operation cancelled'));
             process.exit(1);
         }
         useI18n = features.value.includes('i18n');
@@ -60,7 +60,7 @@ program
     
     // Force i18n if login is selected (since our login template uses [locale])
     if (useLogin && !useI18n) {
-        console.log(pc.yellow('⚠️  Login feature requires i18n. Enabling i18n automatically.'));
+        console.log(pc.yellow('[WARN] Login feature requires i18n. Enabling i18n automatically.'));
         useI18n = true;
     }
 
@@ -69,7 +69,7 @@ program
     const templatesDir = path.resolve(__dirname, '../templates');
 
     if (fs.existsSync(root)) {
-      console.log(pc.red(`❌ Directory ${targetDir} already exists.`));
+      console.log(pc.red(`[ERROR] Directory ${targetDir} already exists.`));
       process.exit(1);
     }
 
@@ -163,6 +163,9 @@ This project includes a complete authentication flow with Mock API.
 - \`src/app/api/auth/*\`: Mock API routes for login/register.
 - \`src/actions/auth.ts\`: Server Actions calling the API routes.
 - \`src/lib/http.ts\`: Server-side HTTP client with auto-auth header injection.
+
+Environment:
+- Copy \`.env.example\` to \`.env.local\` and update \`API_URL\` if you have a real backend.
 
 You can replace the Mock API in \`src/actions/auth.ts\` with your real backend endpoint.`);
         }

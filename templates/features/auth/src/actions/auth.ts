@@ -3,10 +3,20 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { http } from '@/lib/http';
+import { routing } from '@/i18n/routing';
+
+function resolveLocale(formData: FormData) {
+  const locale = formData.get('locale');
+  if (typeof locale === 'string' && routing.locales.includes(locale as any)) {
+    return locale;
+  }
+  return routing.defaultLocale;
+}
 
 export async function login(formData: FormData) {
   const email = formData.get('email');
   const password = formData.get('password');
+  const locale = resolveLocale(formData);
   let isSuccess = false;
   
   try {
@@ -32,7 +42,7 @@ export async function login(formData: FormData) {
   }
 
   if (isSuccess) {
-    redirect('/dashboard');
+    redirect(`/${locale}/dashboard`);
   }
   
   return { success: false, error: 'Invalid credentials' };
@@ -41,6 +51,7 @@ export async function login(formData: FormData) {
 export async function register(formData: FormData) {
   const email = formData.get('email');
   const password = formData.get('password');
+  const locale = resolveLocale(formData);
   let isSuccess = false;
   
   try {
@@ -59,14 +70,15 @@ export async function register(formData: FormData) {
   }
 
   if (isSuccess) {
-    redirect('/login');
+    redirect(`/${locale}/login`);
   }
   
   return { success: false, error: 'Registration failed' };
 }
 
-export async function logout() {
+export async function logout(formData: FormData) {
+  const locale = resolveLocale(formData);
   const cookieStore = await cookies();
   cookieStore.delete('jwt-token');
-  redirect('/login');
+  redirect(`/${locale}/login`);
 }

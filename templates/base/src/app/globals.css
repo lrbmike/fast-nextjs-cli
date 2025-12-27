@@ -1,16 +1,7 @@
-/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/*
- * 步骤 1: 声明配置文件 (必须在最顶部)
- * 这会告诉 Tailwind 使用哪个蓝图。
- */
-@config "../../tailwind.config.ts";
-
-/*
- * 步骤 2: 定义所有的主题变量 (在导入 Tailwind 之前)
- * 这是最关键的改动！我们在这里定义了所有的颜色、圆角等变量。
- * 这样，当 Tailwind 引擎在下一步被导入时，这些变量就已经存在于 CSS 上下文中了。
- */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -58,17 +49,6 @@
   }
 }
 
-/*
- * 步骤 3: 导入 Tailwind 引擎
- * 现在，当 Tailwind 启动时，它会立刻看到上面已经定义的变量，并将它们
- * 与 tailwind.config.ts 中的主题名称（如 'background'）正确地关联起来。
- */
-@import "tailwindcss";
-
-/*
- * 步骤 4: 定义全局基础样式
- * 这里的 @apply 现在可以正确地从我们自定义的主题中取值了。
- */
 @layer base {
   * {
     @apply border-border;

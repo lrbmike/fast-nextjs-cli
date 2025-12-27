@@ -10,10 +10,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { register } from "@/actions/auth"
-import Link from "next/link"
-import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
-export default async function RegisterPage() {
+export default async function RegisterPage({params}: {params: Promise<{locale: string}>}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("Auth");
 
   return (
@@ -27,6 +29,7 @@ export default async function RegisterPage() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <form action={register} className="grid gap-4">
+            <input type="hidden" name="locale" value={locale} />
             <div className="grid gap-2">
               <Label htmlFor="email">{t('email')}</Label>
               <Input id="email" name="email" type="email" placeholder="m@example.com" required />

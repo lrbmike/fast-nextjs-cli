@@ -31,7 +31,7 @@ program
         targetDir = response.projectName;
     }
     if (!targetDir) {
-        console.log(picocolors_1.default.red('❌ Project name is required'));
+        console.log(picocolors_1.default.red('[ERROR] Project name is required'));
         process.exit(1);
     }
     let useI18n = options.withI18n;
@@ -49,7 +49,7 @@ program
         });
         // Check if features.value exists (user might cancel)
         if (!features.value) {
-            console.log(picocolors_1.default.red('❌ Operation cancelled'));
+            console.log(picocolors_1.default.red('[ERROR] Operation cancelled'));
             process.exit(1);
         }
         useI18n = features.value.includes('i18n');
@@ -57,14 +57,14 @@ program
     }
     // Force i18n if login is selected (since our login template uses [locale])
     if (useLogin && !useI18n) {
-        console.log(picocolors_1.default.yellow('⚠️  Login feature requires i18n. Enabling i18n automatically.'));
+        console.log(picocolors_1.default.yellow('[WARN] Login feature requires i18n. Enabling i18n automatically.'));
         useI18n = true;
     }
     const root = path_1.default.resolve(process.cwd(), targetDir);
     // Assumption: compiled .js files are in dist/, so templates are in ../templates relative to dist/index.js
     const templatesDir = path_1.default.resolve(__dirname, '../templates');
     if (fs_extra_1.default.existsSync(root)) {
-        console.log(picocolors_1.default.red(`❌ Directory ${targetDir} already exists.`));
+        console.log(picocolors_1.default.red(`[ERROR] Directory ${targetDir} already exists.`));
         process.exit(1);
     }
     const spinner = (0, ora_1.default)(`Creating project in ${picocolors_1.default.green(root)}...`).start();
@@ -144,6 +144,9 @@ This project includes a complete authentication flow with Mock API.
 - \`src/app/api/auth/*\`: Mock API routes for login/register.
 - \`src/actions/auth.ts\`: Server Actions calling the API routes.
 - \`src/lib/http.ts\`: Server-side HTTP client with auto-auth header injection.
+
+Environment:
+- Copy \`.env.example\` to \`.env.local\` and update \`API_URL\` if you have a real backend.
 
 You can replace the Mock API in \`src/actions/auth.ts\` with your real backend endpoint.`);
         }

@@ -4,25 +4,47 @@ import {NextRequest, NextResponse} from 'next/server';
 
 const i18nMiddleware = createMiddleware(routing);
 
-// Define protected routes
 const protectedRoutes = ['/dashboard', '/profile'];
+
+function extractLocaleFromPath(pathname: string) {
+  const segments = pathname.split('/').filter(Boolean);
+  const maybeLocale = segments[0];
+  if (maybeLocale && routing.locales.includes(maybeLocale as any)) {
+    return maybeLocale;
+  }
+  return null;
+}
+
+function normalizePath(pathname: string, localeFromPath: string | null) {
+  const segments = pathname.split('/').filter(Boolean);
+  const sliceStart = localeFromPath ? 1 : 0;
+  const normalized = segments.slice(sliceStart).join('/');
+  return `/${normalized}`;
+}
+
+function resolveLocale(request: NextRequest, localeFromPath: string | null) {
+  if (localeFromPath) {
+    return localeFromPath;
+  }
+
+  const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
+  if (cookieLocale && routing.locales.includes(cookieLocale as any)) {
+    return cookieLocale;
+  }
+
+  return routing.defaultLocale;
+}
 
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
-  // Check authentication for protected routes
-  // We check if the pathname contains any protected route
-  // This handles /en/dashboard, /dashboard, etc.
-  const isProtectedRoute = protectedRoutes.some(route => 
-    pathname.includes(route)
-  );
+  const localeFromPath = extractLocaleFromPath(pathname);
+  const normalizedPath = normalizePath(pathname, localeFromPath);
+  const isProtectedRoute = protectedRoutes.some(route => normalizedPath.startsWith(route));
 
   if (isProtectedRoute) {
     const token = request.cookies.get('jwt-token');
     if (!token) {
-      // Redirect to login page
-      // We try to respect the current locale preference or fallback to default
-      const locale = request.cookies.get('NEXT_LOCALE')?.value || routing.defaultLocale;
+      const locale = resolveLocale(request, localeFromPath);
       return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
     }
   }

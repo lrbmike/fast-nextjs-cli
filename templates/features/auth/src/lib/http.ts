@@ -11,7 +11,7 @@ async function getBaseUrl() {
   if (API_URL) return API_URL;
   
   // Fallback to localhost for demo purposes (server-to-server)
-  const host = (await headers()).get('host');
+  const host = headers().get('host') ?? 'localhost:3000';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
   return `${protocol}://${host}/api`;
 }

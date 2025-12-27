@@ -33,6 +33,12 @@ Example:
 fast-nextjs-cli create my-app --with-login
 ```
 
+## Auth & Permissions
+
+- Without `--with-login`, the scaffold only copies the base or i18n structure. There is no auth middleware and every route remains public.
+- With `--with-login`, the CLI adds locale-aware Login/Register pages, `actions/auth.ts`, mock `api/auth/*` routes, and writes `src/middleware.ts` that protects `/[locale]/dashboard` via the JWT cookie. Users without a token are redirected to the correct locale login page.
+- Auth-enabled projects also include a `.env.example`; copy it to `.env.local` and set `API_URL` when replacing the mock API with your backend.
+
 ## Project Structure
 
 The generated project will have the following structure based on your choices:
