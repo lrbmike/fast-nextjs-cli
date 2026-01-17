@@ -7,9 +7,11 @@ export async function POST(request: Request) {
     // Mock validation
     if (email === 'admin@example.com' && password === 'password') {
       // Return a mock token
-      return NextResponse.json({ 
-        token: 'mock-jwt-token-from-api',
-        user: { id: 1, name: 'Admin', email } 
+      return NextResponse.json({
+        data: {
+          token: 'mock-jwt-token-from-api',
+          user: { id: 1, name: 'Admin', email }
+        }
       });
     }
 

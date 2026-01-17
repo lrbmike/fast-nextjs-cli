@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -7,11 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { login } from "@/actions/auth"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
+import LoginForm from "./login-form"
 
 export default async function LoginPage({params}: {params: Promise<{locale: string}>}) {
   const { locale } = await params;
@@ -28,18 +25,7 @@ export default async function LoginPage({params}: {params: Promise<{locale: stri
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <form action={login} className="grid gap-4">
-            <input type="hidden" name="locale" value={locale} />
-            <div className="grid gap-2">
-              <Label htmlFor="email">{t('email')}</Label>
-              <Input id="email" name="email" type="email" placeholder="m@example.com" required defaultValue="admin@example.com"/>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">{t('password')}</Label>
-              <Input id="password" name="password" type="password" required defaultValue="password"/>
-            </div>
-            <Button className="w-full" type="submit">{t('signIn')}</Button>
-          </form>
+          <LoginForm locale={locale} />
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
            <div className="text-sm text-muted-foreground w-full text-center">

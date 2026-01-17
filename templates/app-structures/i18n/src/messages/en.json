@@ -24,7 +24,12 @@
     "signUp": "Sign Up",
     "alreadyHaveAccount": "Already have an account?",
     "dontHaveAccount": "Don't have an account?",
-    "demoCredentials": "Demo credentials: admin@example.com / password"
+    "demoCredentials": "Demo credentials: admin@example.com / password",
+    "invalidCredentials": "Invalid email or password.",
+    "loginFailed": "Login failed. Please try again.",
+    "invalidRegistrationData": "Please fill in all required fields.",
+    "passwordMismatch": "Passwords do not match.",
+    "registrationFailed": "Registration failed. Please try again."
   },
   "Dashboard": {
     "title": "Dashboard",

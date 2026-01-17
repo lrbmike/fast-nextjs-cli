@@ -3,6 +3,10 @@ import { cookies, headers } from 'next/headers';
 
 const API_URL = process.env.API_URL;
 
+export type ApiResponse<T> = {
+  data: T;
+};
+
 type FetchOptions = RequestInit & {
   requiresAuth?: boolean;
 };

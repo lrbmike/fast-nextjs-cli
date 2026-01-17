@@ -5,10 +5,15 @@ export async function POST(request: Request) {
     const { email, password } = await request.json();
 
     if (email && password) {
-      return NextResponse.json({ 
-        token: 'mock-jwt-token-register',
-        user: { id: 2, name: 'New User', email } 
-      });
+      return NextResponse.json(
+        {
+          data: {
+            success: true,
+            user: { id: 2, name: 'New User', email }
+          }
+        },
+        { status: 201 }
+      );
     }
 
     return NextResponse.json(

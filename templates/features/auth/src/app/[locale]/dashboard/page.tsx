@@ -8,21 +8,25 @@ import {
 } from "@/components/ui/card";
 import { logout } from "@/actions/auth";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import DashboardClient from "./dashboard-client";
+import { getDashboardData } from "@/lib/api/dashboard";
 
 export default async function DashboardPage({params}: {params: Promise<{locale: string}>}) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Dashboard");
+  const data = await getDashboardData();
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle>{t('title')}</CardTitle>
           <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           <p>{t('welcome')}</p>
+          <DashboardClient data={data} />
           <form action={logout}>
             <input type="hidden" name="locale" value={locale} />
             <Button variant="destructive" type="submit">

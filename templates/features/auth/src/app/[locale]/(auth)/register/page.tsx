@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -7,11 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { register } from "@/actions/auth"
 import { Link } from "@/i18n/navigation"
 import { getTranslations, setRequestLocale } from "next-intl/server"
+import RegisterForm from "./register-form"
 
 export default async function RegisterPage({params}: {params: Promise<{locale: string}>}) {
   const { locale } = await params;
@@ -28,22 +25,7 @@ export default async function RegisterPage({params}: {params: Promise<{locale: s
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <form action={register} className="grid gap-4">
-            <input type="hidden" name="locale" value={locale} />
-            <div className="grid gap-2">
-              <Label htmlFor="email">{t('email')}</Label>
-              <Input id="email" name="email" type="email" placeholder="m@example.com" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">{t('password')}</Label>
-              <Input id="password" name="password" type="password" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
-              <Input id="confirmPassword" name="confirmPassword" type="password" required />
-            </div>
-            <Button className="w-full" type="submit">{t('signUp')}</Button>
-          </form>
+          <RegisterForm locale={locale} />
         </CardContent>
         <CardFooter>
            <div className="text-sm text-muted-foreground w-full text-center">
