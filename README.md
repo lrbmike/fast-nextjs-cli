@@ -36,7 +36,7 @@ fast-nextjs-cli create my-app
 ### Options
 
 - `--with-i18n`: Enable i18n support
-- `--with-login`: Enable login/register feature (automatically enables i18n and updates home page)
+- `--with-login`: Enable login/register feature (works with or without i18n and updates home page)
 
 Example:
 
@@ -47,7 +47,9 @@ fast-nextjs-cli create my-app --with-login
 ## Auth & Permissions
 
 - Without `--with-login`, the scaffold only copies the base or i18n structure. There is no auth middleware and every route remains public.
-- With `--with-login`, the CLI adds locale-aware Login/Register pages, `actions/auth.ts`, mock `api/auth/*` routes, and writes `src/middleware.ts` that protects `/[locale]/dashboard` via the JWT cookie. Users without a token are redirected to the correct locale login page.
+- With `--with-login`, the CLI adds Login/Register pages, `actions/auth.ts`, mock `api/auth/*` routes, and writes `src/middleware.ts` that protects the dashboard routes via the JWT cookie.
+  - With `--with-i18n`, routes are locale-aware (`/[locale]/login`, `/[locale]/dashboard`) and users are redirected to the matching locale login page.
+  - Without `--with-i18n`, routes are `/login` and `/dashboard`.
 - Auth-enabled projects also include a `.env.example`; copy it to `.env.local` and set `API_URL` when replacing the mock API with your backend.
 
 ## Project Structure

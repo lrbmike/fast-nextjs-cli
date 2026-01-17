@@ -58,12 +58,6 @@ program
         useLogin = features.value.includes('login');
     }
     
-    // Force i18n if login is selected (since our login template uses [locale])
-    if (useLogin && !useI18n) {
-        console.log(pc.yellow('[WARN] Login feature requires i18n. Enabling i18n automatically.'));
-        useI18n = true;
-    }
-
     const root = path.resolve(process.cwd(), targetDir);
     // Assumption: compiled .js files are in dist/, so templates are in ../templates relative to dist/index.js
     const templatesDir = path.resolve(__dirname, '../templates');
@@ -91,13 +85,16 @@ program
 
         // 3. Copy Feature Modules
         if (useLogin) {
-            await fs.copy(path.join(templatesDir, 'features/auth'), root, { overwrite: true });
+            const authTemplate = useI18n ? 'features/auth' : 'features/auth-basic';
+            await fs.copy(path.join(templatesDir, authTemplate), root, { overwrite: true });
         }
 
         // 4. Configure Middleware
         let middlewareSource = '';
         if (useI18n && useLogin) {
             middlewareSource = 'configs/middleware/intl-auth.ts';
+        } else if (useLogin) {
+            middlewareSource = 'configs/middleware/auth.ts';
         } else if (useI18n) {
             middlewareSource = 'configs/middleware/intl.ts';
         } else {
@@ -149,9 +146,14 @@ export default nextConfig;
 
         if (useLogin) {
             features.push('- **Auth**: Authentication with Login/Register pages and Server Actions');
-            structure.push('- `src/app/[locale]/(auth)`: Authentication routes');
+            if (useI18n) {
+                structure.push('- `src/app/[locale]/(auth)`: Authentication routes');
+            } else {
+                structure.push('- `src/app/(auth)`: Authentication routes');
+            }
             structure.push('- `src/actions/auth.ts`: Authentication logic');
-            docs.push(`## Authentication
+            if (useI18n) {
+                docs.push(`## Authentication
 
 This project includes a complete authentication flow with Mock API.
 
@@ -163,11 +165,32 @@ This project includes a complete authentication flow with Mock API.
 - \`src/app/api/auth/*\`: Mock API routes for login/register.
 - \`src/actions/auth.ts\`: Server Actions calling the API routes.
 - \`src/lib/http.ts\`: Server-side HTTP client with auto-auth header injection.
+- \`src/middleware.ts\`: Protects \`/[locale]/dashboard\` and redirects to the locale login page.
 
 Environment:
 - Copy \`.env.example\` to \`.env.local\` and update \`API_URL\` if you have a real backend.
 
 You can replace the Mock API in \`src/actions/auth.ts\` with your real backend endpoint.`);
+            } else {
+                docs.push(`## Authentication
+
+This project includes a complete authentication flow with Mock API.
+
+**Test Credentials:**
+- Email: \`admin@example.com\`
+- Password: \`password\`
+
+**Architecture:**
+- \`src/app/api/auth/*\`: Mock API routes for login/register.
+- \`src/actions/auth.ts\`: Server Actions calling the API routes.
+- \`src/lib/http.ts\`: Server-side HTTP client with auto-auth header injection.
+- \`src/middleware.ts\`: Protects \`/dashboard\` and redirects to \`/login\`.
+
+Environment:
+- Copy \`.env.example\` to \`.env.local\` and update \`API_URL\` if you have a real backend.
+
+You can replace the Mock API in \`src/actions/auth.ts\` with your real backend endpoint.`);
+            }
         }
 
         readmeContent = readmeContent.replace('<!-- FEATURES_PLACEHOLDER -->', features.join('\n'));
