@@ -1,19 +1,49 @@
 {
   "name": "fast-nextjs-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Scaffold Next.js 15 + React 19 projects with i18n, auth, and Tailwind/Shadcn UI.",
+  "main": "dist/index.js",
   "bin": {
     "fast-nextjs-cli": "./bin/cli.js"
   },
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "nextjs",
+    "react",
+    "scaffold",
+    "starter",
+    "tailwind",
+    "shadcn",
+    "i18n",
+    "auth"
+  ],
+  "author": "lrbmike",
+  "license": "MIT",
   "type": "commonjs",
+  "files": [
+    "bin",
+    "dist",
+    "templates",
+    "README.md",
+    "README_zh-CN.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lrbmike/fast-nextjs-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lrbmike/fast-nextjs-cli/issues"
+  },
+  "homepage": "https://github.com/lrbmike/fast-nextjs-cli#readme",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "commander": "^14.0.2",
     "execa": "^9.6.0",

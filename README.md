@@ -6,9 +6,20 @@ A custom scaffold for Next.js 15 + React 19 projects with built-in support for:
 - **Tailwind CSS** + **ShadcnUI**
 - **Zustand** State Management
 
+## Prerequisites
+
+- Node.js 18+ (recommended 20+)
+
 ## Installation
 
 ```bash
+# From npm (global install)
+npm install -g fast-nextjs-cli
+
+# Or run directly without install
+npx fast-nextjs-cli create my-app
+
+# Local development
 npm install -g .
 # OR link locally
 npm link

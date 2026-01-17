@@ -6,9 +6,20 @@
 - **UI 框架**: Tailwind CSS + ShadcnUI
 - **状态管理**: Zustand
 
+## 前置条件
+
+- Node.js 18+（推荐 20+）
+
 ## 安装
 
 ```bash
+# 从 npm 安装（全局）
+npm install -g fast-nextjs-cli
+
+# 或无需安装直接运行
+npx fast-nextjs-cli create my-app
+
+# 本地开发
 npm install -g .
 # 或者本地链接
 npm link
