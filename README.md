@@ -1,6 +1,6 @@
 # Fast Next.js CLI
 
-A custom scaffold for Next.js 15 + React 19 projects with built-in support for:
+A custom scaffold for Next.js 16 + React 19 projects with built-in support for:
 - **i18n** (next-intl)
 - **Authentication** (Login & Register pages + JWT via Server Actions)
 - **Tailwind CSS** + **ShadcnUI**
