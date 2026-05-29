@@ -13,16 +13,20 @@
 ## 安装
 
 ```bash
-# 从 npm 安装（全局）
-npm install -g fast-nextjs-cli
+# 从 npm 包安装（全局）
+pnpm add -g fast-nextjs-cli
 
 # 或无需安装直接运行
-npx fast-nextjs-cli create my-app
+pnpm dlx fast-nextjs-cli create my-app
 
 # 本地开发
-npm install -g .
-# 或者本地链接
-npm link
+pnpm install
+pnpm build
+
+# 本地链接为全局命令
+# 如果提示 ERR_PNPM_NO_GLOBAL_BIN_DIR，请先执行 pnpm setup，
+# 然后重启终端或重新加载 shell 配置后再执行下面的命令。
+pnpm link --global
 ```
 
 ## 使用方法
@@ -42,6 +46,35 @@ fast-nextjs-cli create my-app
 
 ```bash
 fast-nextjs-cli create my-app --with-login
+```
+
+如果是在当前仓库中本地调试，也可以不链接全局命令，直接运行：
+
+```bash
+pnpm install
+pnpm build
+node bin/cli.js create my-app --with-login
+```
+
+如果执行 `pnpm link --global` 时出现 `ERR_PNPM_NO_GLOBAL_BIN_DIR`，说明 pnpm 还没有配置全局命令目录。可以执行：
+
+```bash
+pnpm setup
+```
+
+然后重启终端，或者重新加载当前 shell 配置，再回到项目目录执行：
+
+```bash
+pnpm link --global
+fast-nextjs-cli create my-app --with-login
+```
+
+创建完成后进入生成的项目，并使用 pnpm 安装依赖和启动开发服务：
+
+```bash
+cd my-app
+pnpm install
+pnpm dev
 ```
 
 ## 权限控制说明

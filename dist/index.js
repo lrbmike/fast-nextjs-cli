@@ -99,7 +99,6 @@ program
         const pkgPath = path_1.default.join(root, 'package.json');
         const pkg = await fs_extra_1.default.readJson(pkgPath);
         pkg.name = targetDir;
-        await fs_extra_1.default.writeJson(pkgPath, pkg, { spaces: 2 });
         // 6. Handle non-i18n next.config.ts override
         // Base template has i18n plugin enabled by default. If we are simple mode, we need to remove it.
         if (!useI18n) {
@@ -112,7 +111,14 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 `;
             await fs_extra_1.default.writeFile(path_1.default.join(root, 'next.config.ts'), nextConfigContent);
+            // Cleanup i18n files
+            await fs_extra_1.default.remove(path_1.default.join(root, 'src/i18n'));
+            // Cleanup unused dependencies
+            if (pkg.dependencies && pkg.dependencies['next-intl']) {
+                delete pkg.dependencies['next-intl'];
+            }
         }
+        await fs_extra_1.default.writeJson(pkgPath, pkg, { spaces: 2 });
         // 7. Generate Dynamic README.md
         const readmePath = path_1.default.join(root, 'README.md');
         let readmeContent = await fs_extra_1.default.readFile(readmePath, 'utf-8');
